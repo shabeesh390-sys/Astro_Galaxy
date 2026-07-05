@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astro Galaxy — Premium Gaming Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { poppins: ['Poppins', 'sans-serif'] },
+          colors: {
+            cosmos: '#04060f',
+            nebula: '#0b0f23',
+            star: '#e8eaf6',
+            aurora: '#7c3aed',
+            nova: '#a855f7',
+            pulsar: '#38bdf8',
+            comet: '#f0abfc',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #04060f;
+      color: #e8eaf6;
+      overflow-x: hidden;
+    }
+
+    /* ── STAR CANVAS ── */
+    #star-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── NEBULA BLOBS ── */
+    .nebula-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+      pointer-events: none;
+      animation: driftBlob 18s ease-in-out infinite alternate;
+    }
+    .blob-1 { width: 600px; height: 600px; background: #7c3aed; top: -150px; left: -150px; animation-delay: 0s; }
+    .blob-2 { width: 500px; height: 500px; background: #0ea5e9; top: 40%; right: -200px; animation-delay: -6s; }
+    .blob-3 { width: 400px; height: 400px; background: #a855f7; bottom: -100px; left: 30%; animation-delay: -12s; }
+    @keyframes driftBlob {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    /* ── GLASS ── */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px) saturate(1.6);
+      -webkit-backdrop-filter: blur(16px) saturate(1.6);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+    }
+    .glass-nav {
+      background: rgba(4,6,15,0.72);
+      backdrop-filter: blur(20px) saturate(1.8);
+      -webkit-backdrop-filter: blur(20px) saturate(1.8);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; transition: background .3s; }
+    .nav-link {
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      color: rgba(232,234,246,.7);
+      transition: color .2s;
+    }
+    .nav-link:hover { color: #f0abfc; }
+
+    /* ── GRADIENT TEXT ── */
+    .grad-text {
+      background: linear-gradient(135deg, #f0abfc 0%, #a855f7 40%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 1.75rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .9rem;
+      letter-spacing: .04em;
+      background: linear-gradient(135deg, #7c3aed, #a855f7, #38bdf8);
+      background-size: 200% 200%;
+      animation: shiftGrad 4s ease infinite;
+      box-shadow: 0 0 24px rgba(168,85,247,.45);
+      cursor: pointer;
+      border: none;
+      color: #fff;
+      transition: transform .15s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(168,85,247,.65); }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .7rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: .85rem;
+      letter-spacing: .04em;
+      background: transparent;
+      border: 1.5px solid rgba(168,85,247,.6);
+      color: #f0abfc;
+      cursor: pointer;
+      transition: background .2s, box-shadow .2s, transform .15s;
+    }
+    .btn-outline:hover { background: rgba(168,85,247,.15); box-shadow: 0 0 20px rgba(168,85,247,.3); transform: translateY(-2px); }
+    @keyframes shiftGrad {
+      0%,100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    /* ── HERO ── */
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,85,247,.18) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .floating { animation: float 5s ease-in-out infinite; }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-16px); }
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #a855f7;
+    }
+
+    /* ── GAME CARD ── */
+    .game-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .game-card:hover { transform: translateY(-6px) scale(1.015); box-shadow: 0 12px 40px rgba(168,85,247,.35); }
+    .game-card .thumb {
+      width: 100%; aspect-ratio: 3/4;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .game-card .thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s ease;
+    }
+    .game-card:hover .thumb img { transform: scale(1.06); }
+    .css-cover {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .game-card .overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(4,6,15,.95) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.25rem;
+    }
+    .game-card .badge {
+      display: inline-block;
+      padding: .2rem .6rem;
+      border-radius: 999px;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+    .tag-action { background: rgba(239,68,68,.25); color: #fca5a5; border: 1px solid rgba(239,68,68,.4); }
+    .tag-racing  { background: rgba(245,158,11,.25); color: #fde68a; border: 1px solid rgba(245,158,11,.4); }
+    .tag-sports  { background: rgba(16,185,129,.25); color: #6ee7b7; border: 1px solid rgba(16,185,129,.4); }
+    .tag-fps     { background: rgba(56,189,248,.25); color: #7dd3fc; border: 1px solid rgba(56,189,248,.4); }
+    .tag-rpg     { background: rgba(168,85,247,.25); color: #d8b4fe; border: 1px solid rgba(168,85,247,.4); }
+
+    /* ── CONSOLE CARD ── */
+    .console-card {
+      transition: transform .25s, box-shadow .25s;
+      cursor: default;
+    }
+    .console-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(56,189,248,.25); }
+    .console-img-wrap {
+      width: 100%;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .console-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 12px;
+      transition: transform .4s ease;
+      filter: drop-shadow(0 4px 24px rgba(168,85,247,0.25));
+    }
+    .console-card:hover .console-img-wrap img { transform: scale(1.07) translateY(-4px); }
+
+    /* ── BOOKING WIZARD ── */
+    .step { display: none; }
+    .step.active { display: block; }
+    .step-indicator {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 700;
+      background: rgba(255,255,255,.07);
+      border: 1.5px solid rgba(255,255,255,.12);
+      color: rgba(232,234,246,.4);
+      transition: background .3s, border-color .3s, color .3s;
+    }
+    .step-indicator.done  { background: rgba(168,85,247,.3); border-color: #a855f7; color: #f0abfc; }
+    .step-indicator.active{ background: linear-gradient(135deg,#7c3aed,#38bdf8); border-color: transparent; color: #fff; }
+    .form-input {
+      width: 100%;
+      padding: .65rem 1rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      color: #e8eaf6;
+      font-family: 'Poppins', sans-serif;
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+    }
+    .form-input:focus { border-color: rgba(168,85,247,.7); box-shadow: 0 0 0 3px rgba(168,85,247,.12); }
+    .form-input option { background: #0b0f23; }
+    .choice-btn {
+      padding: .6rem 1.1rem;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      color: rgba(232,234,246,.65);
+      font-family: 'Poppins', sans-serif;
+      font-size: .8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+    }
+    .choice-btn:hover, .choice-btn.selected {
+      border-color: #a855f7;
+      background: rgba(168,85,247,.15);
+      color: #f0abfc;
+      box-shadow: 0 0 14px rgba(168,85,247,.25);
+    }
+
+    /* ── SLOT BUTTONS ── */
+    .slot-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: .55rem .4rem;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      color: rgba(232,234,246,.8);
+      font-family: 'Poppins', sans-serif;
+      font-size: .72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .slot-btn .slot-tag {
+      font-size: .6rem;
+      font-weight: 500;
+      color: #6ee7b7;
+      letter-spacing: .04em;
+    }
+    .slot-btn:hover:not(:disabled) {
+      border-color: #a855f7;
+      background: rgba(168,85,247,.12);
+      color: #f0abfc;
+    }
+    .slot-btn.selected {
+      border-color: #a855f7 !important;
+      background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(56,189,248,.2)) !important;
+      color: #fff !important;
+      box-shadow: 0 0 16px rgba(168,85,247,.4);
+    }
+    .slot-btn.selected .slot-tag { color: #f0abfc; }
+    .slot-btn.booked {
+      opacity: .45;
+      cursor: not-allowed;
+      border-color: rgba(239,68,68,.25);
+      background: rgba(239,68,68,.06);
+      color: rgba(232,234,246,.35);
+    }
+    .slot-btn.booked .slot-tag { color: #fca5a5; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid rgba(255,255,255,.06); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── MOBILE MENU ── */
+    #mobile-menu { transition: max-height .35s ease, opacity .3s ease; max-height: 0; overflow: hidden; opacity: 0; }
+    #mobile-menu.open { max-height: 300px; opacity: 1; }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      background: rgba(11,15,35,.92);
+      border: 1px solid rgba(168,85,247,.4);
+      backdrop-filter: blur(12px);
+      color: #f0abfc;
+      font-size: .85rem; font-weight: 500;
+      transform: translateX(120%);
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+      max-width: 320px;
+    }
+    #toast.show { transform: translateX(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nebula-blob, .floating, .btn-primary { animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body class="font-poppins">
+
+  <!-- Ambient background -->
+  <canvas id="star-canvas"></canvas>
+  <div class="nebula-blob blob-1"></div>
+  <div class="nebula-blob blob-2"></div>
+  <div class="nebula-blob blob-3"></div>
+
+  <!-- ══════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════ -->
+  <nav id="navbar" class="glass-nav">
+    <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between gap-4 relative z-10">
+      <!-- Logo -->
+      <a href="#home" class="flex items-center gap-2.5 shrink-0">
+        <span class="text-2xl">🌌</span>
+        <span class="font-black text-lg tracking-tight">
+          <span class="grad-text">Astro</span>
+          <span class="text-star"> Galaxy</span>
+        </span>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center gap-7">
+        <a href="#home"     class="nav-link">Home</a>
+        <a href="#games"    class="nav-link">Games</a>
+        <a href="#consoles" class="nav-link">Consoles</a>
+        <a href="#booking"  class="nav-link">Book Slots</a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-3">
+        <button onclick="scrollToBooking()" class="btn-primary text-sm">Book Now ✦</button>
+      </div>
+
+      <!-- Hamburger -->
+      <button id="hamburger" class="md:hidden text-star p-2" onclick="toggleMenu()" aria-label="Toggle menu">
+        <svg id="ham-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6"  x2="21" y2="6"  />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden px-5 pb-4">
+      <div class="flex flex-col gap-4 pt-2">
+        <a href="#home"     onclick="toggleMenu()" class="nav-link text-sm">Home</a>
+        <a href="#games"    onclick="toggleMenu()" class="nav-link text-sm">Games &amp; Consoles</a>
+        <a href="#consoles" onclick="toggleMenu()" class="nav-link text-sm">Platforms</a>
+        <a href="#booking"  onclick="toggleMenu()" class="nav-link text-sm">Book Slots</a>
+        <button onclick="scrollToBooking();toggleMenu();" class="btn-primary self-start">Book Now ✦</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center text-center px-5 pt-20 pb-16 overflow-hidden z-10">
+    <div class="hero-glow"></div>
+
+    <!-- Orbit ring decoration -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div style="width:520px;height:520px;border-radius:50%;border:1px solid rgba(168,85,247,.1);animation:spinSlow 30s linear infinite;"></div>
+    </div>
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div style="width:320px;height:320px;border-radius:50%;border:1px solid rgba(56,189,248,.08);animation:spinSlow 20s linear infinite reverse;"></div>
+    </div>
+
+    <div class="relative max-w-3xl z-10">
+      <p class="section-label mb-4 floating">✦ Tiruchirappalli's #1 Premium Gaming Center</p>
+      <h1 class="font-black leading-[1.12] mb-6" style="font-size:clamp(2.4rem,6vw,4.5rem);">
+        Enter the <span class="grad-text">Galaxy.</span><br/>Play at <span class="grad-text">Warp Speed.</span>
+      </h1>
+      <p class="text-base md:text-lg text-star/60 max-w-xl mx-auto mb-10 leading-relaxed">
+        Ultra-high-end consoles, VR arenas, and gaming PCs — all in one cosmic hub. Book your slot and dominate the universe.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <button onclick="scrollToBooking()" class="btn-primary text-base px-8 py-3.5">Book a Slot ✦</button>
+        <a href="#games" class="btn-outline text-base px-8 py-3.5">Browse Games →</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="flex flex-wrap justify-center gap-8 mt-14">
+        <div>
+          <p class="font-black text-3xl grad-text">50+</p>
+          <p class="text-xs text-star/50 mt-0.5">Premium Titles</p>
+        </div>
+        <div class="hidden sm:block w-px bg-white/10"></div>
+        <div>
+          <p class="font-black text-3xl grad-text">12</p>
+          <p class="text-xs text-star/50 mt-0.5">Gaming Pods</p>
+        </div>
+        <div class="hidden sm:block w-px bg-white/10"></div>
+        <div>
+          <p class="font-black text-3xl grad-text">4K</p>
+          <p class="text-xs text-star/50 mt-0.5">Display Quality</p>
+        </div>
+        <div class="hidden sm:block w-px bg-white/10"></div>
+        <div>
+          <p class="font-black text-3xl grad-text">24/7</p>
+          <p class="text-xs text-star/50 mt-0.5">Open All Week</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       GAMES SHOWCASE
+  ══════════════════════════════════════════ -->
+  <section id="games" class="relative z-10 py-24 px-5">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14 reveal">
+        <p class="section-label mb-3">— Game Library —</p>
+        <h2 class="font-black text-4xl md:text-5xl mb-4">Popular <span class="grad-text">Titles</span></h2>
+        <p class="text-star/55 max-w-lg mx-auto">Dive into our handpicked collection of the most electrifying games across all genres.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+
+        <!-- RDR2 - Steam App 1174180 ✅ confirmed working -->
+        <div class="game-card glass reveal" style="--bg:#1a0a00;">
+          <div class="thumb" style="background:#1a0a00;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/library_600x900.jpg"
+                 alt="Red Dead Redemption 2"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#8B1A0A,#3d1c00,#1a0a00);font-size:2.5rem;">🤠</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-action">Action / RPG</span>
+            <p class="font-bold text-sm leading-snug">Red Dead Redemption 2</p>
+            <p class="text-star/50 text-xs mt-0.5">PS5 · PC</p>
+          </div>
+        </div>
+
+        <!-- GTA V - Steam App 271590 ✅ confirmed working -->
+        <div class="game-card glass reveal" style="animation-delay:.05s;--bg:#001529;">
+          <div class="thumb" style="background:#001529;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_600x900.jpg"
+                 alt="GTA V"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#1a3a6b,#001529);font-size:2.5rem;">🏙️</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-action">Action</span>
+            <p class="font-bold text-sm leading-snug">GTA V</p>
+            <p class="text-star/50 text-xs mt-0.5">PS5 · Xbox · PC</p>
+          </div>
+        </div>
+
+        <!-- Valorant - NOT on Steam, use Riot official CDN -->
+        <div class="game-card glass reveal" style="animation-delay:.1s;--bg:#0f1923;">
+          <div class="thumb" style="background:#0f1923;">
+            <img src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/game_data/b16f40e8ee30d6aa78ef8a26f4bf6c4f7985c7f3-1600x2000.jpg"
+                 alt="Valorant"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#FF4655,#0f1923);font-size:2.5rem;">🎯</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-fps">FPS</span>
+            <p class="font-bold text-sm leading-snug">Valorant</p>
+            <p class="text-star/50 text-xs mt-0.5">PC</p>
+          </div>
+        </div>
+
+        <!-- EA FC 25 - Steam App 2195250 -->
+        <div class="game-card glass reveal" style="animation-delay:.15s;--bg:#001429;">
+          <div class="thumb" style="background:#001429;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2195250/library_600x900.jpg"
+                 alt="EA FC 25"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#005CB8,#001429);font-size:2.5rem;">⚽</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-sports">Sports</span>
+            <p class="font-bold text-sm leading-snug">EA FC 25</p>
+            <p class="text-star/50 text-xs mt-0.5">PS5 · Xbox</p>
+          </div>
+        </div>
+
+        <!-- Cyberpunk 2077 - Steam App 1091500 ✅ confirmed working -->
+        <div class="game-card glass reveal" style="animation-delay:.2s;--bg:#060a13;">
+          <div class="thumb" style="background:#060a13;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_600x900.jpg"
+                 alt="Cyberpunk 2077"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#F6C90E,#060a13);font-size:2.5rem;">🌆</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-rpg">RPG</span>
+            <p class="font-bold text-sm leading-snug">Cyberpunk 2077</p>
+            <p class="text-star/50 text-xs mt-0.5">PS5 · PC</p>
+          </div>
+        </div>
+
+        <!-- Spider-Man 2 - PS5 exclusive, use Marvel/PlayStation press image -->
+        <div class="game-card glass reveal" style="animation-delay:.25s;--bg:#1a0030;">
+          <div class="thumb" style="background:#1a0030;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2267270/library_600x900.jpg"
+                 alt="Spider-Man 2"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#C41E3A,#1a0030);font-size:2.5rem;">🕷️</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-action">Action</span>
+            <p class="font-bold text-sm leading-snug">Spider-Man 2</p>
+            <p class="text-star/50 text-xs mt-0.5">PS5</p>
+          </div>
+        </div>
+
+        <!-- Forza Horizon 5 - Steam App 1551360 ✅ confirmed working -->
+        <div class="game-card glass reveal" style="animation-delay:.3s;--bg:#0d0a00;">
+          <div class="thumb" style="background:#0d0a00;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/library_600x900.jpg"
+                 alt="Forza Horizon 5"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#E8400C,#0d0a00);font-size:2.5rem;">🏎️</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-racing">Racing</span>
+            <p class="font-bold text-sm leading-snug">Forza Horizon 5</p>
+            <p class="text-star/50 text-xs mt-0.5">Xbox · PC</p>
+          </div>
+        </div>
+
+        <!-- COD MW3 - Steam App 2519060 -->
+        <div class="game-card glass reveal" style="animation-delay:.35s;--bg:#0a0a08;">
+          <div class="thumb" style="background:#0a0a08;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2519060/library_600x900.jpg"
+                 alt="Call of Duty MW3"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#4A5240,#0a0a08);font-size:2.5rem;">💣</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-fps">FPS</span>
+            <p class="font-bold text-sm leading-snug">Call of Duty MW3</p>
+            <p class="text-star/50 text-xs mt-0.5">PS5 · Xbox · PC</p>
+          </div>
+        </div>
+
+        <!-- Mortal Kombat 1 - Steam App 1971870 -->
+        <div class="game-card glass reveal" style="animation-delay:.4s;--bg:#0f0000;">
+          <div class="thumb" style="background:#0f0000;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1971870/library_600x900.jpg"
+                 alt="Mortal Kombat 1"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#8B0000,#0f0000);font-size:2.5rem;">🥊</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-action">Fighting</span>
+            <p class="font-bold text-sm leading-snug">Mortal Kombat 1</p>
+            <p class="text-star/50 text-xs mt-0.5">PS5 · Xbox</p>
+          </div>
+        </div>
+
+        <!-- Horizon VR - PSVR2 exclusive -->
+        <div class="game-card glass reveal" style="animation-delay:.45s;--bg:#001122;">
+          <div class="thumb" style="background:#001122;">
+            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2177760/library_600x900.jpg"
+                 alt="Horizon Call of the Mountain VR"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div class="css-cover" style="display:none;background:linear-gradient(160deg,#1B6CA8,#001122);font-size:2.5rem;">🥽</div>
+          </div>
+          <div class="overlay">
+            <span class="badge tag-rpg">VR</span>
+            <p class="font-bold text-sm leading-snug">Horizon: COTM VR</p>
+            <p class="text-star/50 text-xs mt-0.5">PSVR2</p>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="text-center text-star/40 text-xs mt-8">+40 more titles available at the center · Updated monthly</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CONSOLES SECTION
+  ══════════════════════════════════════════ -->
+  <section id="consoles" class="relative z-10 py-24 px-5">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14 reveal">
+        <p class="section-label mb-3">— Platforms —</p>
+        <h2 class="font-black text-4xl md:text-5xl mb-4">Choose Your <span class="grad-text">Weapon</span></h2>
+        <p class="text-star/55 max-w-lg mx-auto">Every pod is stocked with the latest hardware. No compromise. All power.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+
+        <!-- PS5 -->
+        <div class="console-card glass p-7 reveal flex flex-col gap-5">
+          <div class="console-img-wrap" style="background:linear-gradient(135deg,#0a0a1a,#1a1a3e);">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/PlayStation_5_and_DualSense_with_transparent_background.png/800px-PlayStation_5_and_DualSense_with_transparent_background.png"
+                 alt="PlayStation 5"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div style="display:none;flex-direction:column;align-items:center;gap:6px;color:white;">
+              <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+                <ellipse cx="50" cy="50" rx="42" ry="42" fill="#003791" opacity=".9"/>
+                <text x="50" y="62" text-anchor="middle" font-size="36" fill="white" font-family="Arial">PS</text>
+                <text x="76" y="48" text-anchor="middle" font-size="18" fill="white" font-family="Arial">5</text>
+              </svg>
+              <span style="font-size:.7rem;opacity:.6;font-family:Poppins,sans-serif;">PlayStation 5</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-black text-xl mb-1">PlayStation 5</h3>
+            <p class="text-star/50 text-sm leading-relaxed">4K@120fps · DualSense haptics · 1TB SSD · Exclusive titles</p>
+          </div>
+          <ul class="text-sm text-star/65 flex flex-col gap-1.5">
+            <li class="flex items-center gap-2"><span class="text-nova">✦</span> 4K Ultra HD Blu-ray</li>
+            <li class="flex items-center gap-2"><span class="text-nova">✦</span> Tempest 3D AudioTech</li>
+            <li class="flex items-center gap-2"><span class="text-nova">✦</span> Adaptive Triggers</li>
+          </ul>
+          <div class="mt-auto pt-4 border-t border-white/10 flex items-end justify-between">
+            <div>
+              <p class="text-2xl font-black grad-text">₹80<span class="text-base font-medium">/hr</span></p>
+              <p class="text-xs text-star/40">per pod</p>
+            </div>
+            <button onclick="scrollToBooking('PS5')" class="btn-primary text-xs px-4 py-2">Book →</button>
+          </div>
+        </div>
+
+        <!-- Xbox Series X -->
+        <div class="console-card glass p-7 reveal flex flex-col gap-5" style="animation-delay:.05s">
+          <div class="console-img-wrap" style="background:linear-gradient(135deg,#0a1a0a,#0a2a0a);">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Xbox_Series_X_Full_Set.png/800px-Xbox_Series_X_Full_Set.png"
+                 alt="Xbox Series X"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div style="display:none;flex-direction:column;align-items:center;gap:6px;color:white;">
+              <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+                <ellipse cx="50" cy="50" rx="42" ry="42" fill="#107C10" opacity=".9"/>
+                <circle cx="50" cy="50" r="16" fill="white" opacity=".15"/>
+                <path d="M30 30 L70 70 M70 30 L30 70" stroke="white" stroke-width="8" stroke-linecap="round"/>
+              </svg>
+              <span style="font-size:.7rem;opacity:.6;font-family:Poppins,sans-serif;">Xbox Series X</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-black text-xl mb-1">Xbox Series X</h3>
+            <p class="text-star/50 text-sm leading-relaxed">4K@120fps · Game Pass library · 1TB NVMe · Ray Tracing</p>
+          </div>
+          <ul class="text-sm text-star/65 flex flex-col gap-1.5">
+            <li class="flex items-center gap-2"><span class="text-pulsar">✦</span> 12 Teraflops GPU</li>
+            <li class="flex items-center gap-2"><span class="text-pulsar">✦</span> Dolby Vision Gaming</li>
+            <li class="flex items-center gap-2"><span class="text-pulsar">✦</span> Smart Delivery</li>
+          </ul>
+          <div class="mt-auto pt-4 border-t border-white/10 flex items-end justify-between">
+            <div>
+              <p class="text-2xl font-black grad-text">₹80<span class="text-base font-medium">/hr</span></p>
+              <p class="text-xs text-star/40">per pod</p>
+            </div>
+            <button onclick="scrollToBooking('Xbox Series X')" class="btn-primary text-xs px-4 py-2">Book →</button>
+          </div>
+        </div>
+
+        <!-- Gaming PC -->
+        <div class="console-card glass p-7 reveal flex flex-col gap-5" style="animation-delay:.1s">
+          <div class="console-img-wrap" style="background:linear-gradient(135deg,#0d0d1a,#1a0d2e);">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Gaming_pc.jpg/800px-Gaming_pc.jpg"
+                 alt="High-End Gaming PC"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div style="display:none;flex-direction:column;align-items:center;gap:6px;color:white;">
+              <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+                <rect x="15" y="20" width="70" height="48" rx="6" fill="#2a2a4a" stroke="#7c3aed" stroke-width="2"/>
+                <rect x="22" y="27" width="56" height="34" rx="3" fill="#0d0d1a"/>
+                <rect x="25" y="30" width="4" height="4" rx="1" fill="#a855f7"/>
+                <rect x="31" y="30" width="4" height="4" rx="1" fill="#38bdf8"/>
+                <rect x="37" y="30" width="4" height="4" rx="1" fill="#f0abfc"/>
+                <rect x="25" y="36" width="28" height="2" rx="1" fill="#7c3aed" opacity=".5"/>
+                <rect x="25" y="40" width="20" height="2" rx="1" fill="#38bdf8" opacity=".4"/>
+                <rect x="25" y="44" width="24" height="2" rx="1" fill="#a855f7" opacity=".3"/>
+                <rect x="35" y="72" width="30" height="4" rx="2" fill="#2a2a4a"/>
+                <rect x="20" y="76" width="60" height="3" rx="1.5" fill="#1a1a3e"/>
+              </svg>
+              <span style="font-size:.7rem;opacity:.6;font-family:Poppins,sans-serif;">RTX 4080 Gaming PC</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-black text-xl mb-1">High-End Gaming PC</h3>
+            <p class="text-star/50 text-sm leading-relaxed">RTX 4080 · i9-13900K · 32GB RAM · 240Hz display</p>
+          </div>
+          <ul class="text-sm text-star/65 flex flex-col gap-1.5">
+            <li class="flex items-center gap-2"><span class="text-comet">✦</span> DLSS 3 / Ray Tracing</li>
+            <li class="flex items-center gap-2"><span class="text-comet">✦</span> 1TB Gen 4 NVMe SSD</li>
+            <li class="flex items-center gap-2"><span class="text-comet">✦</span> Mech. Keyboard + Mouse</li>
+          </ul>
+          <div class="mt-auto pt-4 border-t border-white/10 flex items-end justify-between">
+            <div>
+              <p class="text-2xl font-black grad-text">₹100<span class="text-base font-medium">/hr</span></p>
+              <p class="text-xs text-star/40">per pod</p>
+            </div>
+            <button onclick="scrollToBooking('Gaming PC')" class="btn-primary text-xs px-4 py-2">Book →</button>
+          </div>
+        </div>
+
+        <!-- VR -->
+        <div class="console-card glass p-7 reveal flex flex-col gap-5" style="animation-delay:.15s">
+          <div class="console-img-wrap" style="background:linear-gradient(135deg,#0a0a1a,#1a0a2e);">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Meta_Quest_3_VR_Headset.png/800px-Meta_Quest_3_VR_Headset.png"
+                 alt="VR Headset"
+                 loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+            <div style="display:none;flex-direction:column;align-items:center;gap:6px;color:white;">
+              <svg width="90" height="70" viewBox="0 0 120 90" fill="none">
+                <rect x="10" y="25" width="100" height="45" rx="18" fill="#1a1a3e" stroke="#7c3aed" stroke-width="2"/>
+                <ellipse cx="42" cy="47" rx="22" ry="16" fill="#0d0d1a" stroke="#a855f7" stroke-width="1.5"/>
+                <ellipse cx="78" cy="47" rx="22" ry="16" fill="#0d0d1a" stroke="#a855f7" stroke-width="1.5"/>
+                <ellipse cx="42" cy="47" rx="14" ry="10" fill="#38bdf8" opacity=".2"/>
+                <ellipse cx="78" cy="47" rx="14" ry="10" fill="#38bdf8" opacity=".2"/>
+                <rect x="56" y="42" width="8" height="10" rx="2" fill="#2a2a4a"/>
+                <path d="M5 47 Q10 20 25 47" stroke="#7c3aed" stroke-width="2" fill="none"/>
+                <path d="M115 47 Q110 20 95 47" stroke="#7c3aed" stroke-width="2" fill="none"/>
+              </svg>
+              <span style="font-size:.7rem;opacity:.6;font-family:Poppins,sans-serif;">PSVR2 + Meta Quest 3</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-black text-xl mb-1">VR Arena</h3>
+            <p class="text-star/50 text-sm leading-relaxed">PSVR2 + Meta Quest 3 · Full-body tracking · 6DoF</p>
+          </div>
+          <ul class="text-sm text-star/65 flex flex-col gap-1.5">
+            <li class="flex items-center gap-2"><span class="text-aurora">✦</span> 4K per eye OLED</li>
+            <li class="flex items-center gap-2"><span class="text-aurora">✦</span> Eye Tracking</li>
+            <li class="flex items-center gap-2"><span class="text-aurora">✦</span> Dedicated Arena Space</li>
+          </ul>
+          <div class="mt-auto pt-4 border-t border-white/10 flex items-end justify-between">
+            <div>
+              <p class="text-2xl font-black grad-text">₹120<span class="text-base font-medium">/hr</span></p>
+              <p class="text-xs text-star/40">per session</p>
+            </div>
+            <button onclick="scrollToBooking('VR Arena')" class="btn-primary text-xs px-4 py-2">Book →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BOOKING WIZARD
+  ══════════════════════════════════════════ -->
+  <section id="booking" class="relative z-10 py-24 px-5">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <p class="section-label mb-3">— Slot Booking —</p>
+        <h2 class="font-black text-4xl md:text-5xl mb-4">Reserve Your <span class="grad-text">Pod</span></h2>
+        <p class="text-star/55">Four quick steps to secure your galaxy-class gaming session.</p>
+      </div>
+
+      <!-- Step progress -->
+      <div class="flex items-center justify-center gap-2 mb-10 reveal">
+        <div id="si-1" class="step-indicator active">1</div>
+        <div class="h-px w-8 bg-white/10" id="sl-12"></div>
+        <div id="si-2" class="step-indicator">2</div>
+        <div class="h-px w-8 bg-white/10" id="sl-23"></div>
+        <div id="si-3" class="step-indicator">3</div>
+        <div class="h-px w-8 bg-white/10" id="sl-34"></div>
+        <div id="si-4" class="step-indicator">4</div>
+      </div>
+
+      <div class="glass p-8 md:p-10 reveal">
+
+        <!-- STEP 1: Date & Time -->
+        <div class="step active" id="step-1">
+          <h3 class="font-bold text-xl mb-1">Pick a Date &amp; Time</h3>
+          <p class="text-star/50 text-sm mb-7">Choose when you want to launch.</p>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="text-xs text-star/60 font-medium mb-2 block">Date</label>
+              <input type="date" id="bk-date" class="form-input" />
+            </div>
+            <div>
+              <label class="text-xs text-star/60 font-medium mb-2 block">Duration</label>
+              <select id="bk-duration" class="form-input">
+                <option value="">— Select Duration —</option>
+                <option value="1">1 Hour</option>
+                <option value="2">2 Hours</option>
+                <option value="3">3 Hours</option>
+                <option value="4">4 Hours (Marathon)</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-5">
+            <label class="text-xs text-star/60 font-medium mb-3 block">Time Slot</label>
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5" id="time-grid">
+              <!-- generated by JS -->
+            </div>
+          </div>
+          <div class="mt-8 flex justify-end">
+            <button onclick="nextStep(1)" class="btn-primary">Next: Console →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Console -->
+        <div class="step" id="step-2">
+          <h3 class="font-bold text-xl mb-1">Choose Your Console</h3>
+          <p class="text-star/50 text-sm mb-7">Select the platform you want to play on.</p>
+          <div class="grid grid-cols-2 gap-3" id="console-grid">
+            <button class="choice-btn" onclick="selectChoice('console',this,'PS5')">🎮 PS5</button>
+            <button class="choice-btn" onclick="selectChoice('console',this,'Xbox Series X')">🟢 Xbox Series X</button>
+            <button class="choice-btn" onclick="selectChoice('console',this,'Gaming PC')">🖥️ Gaming PC</button>
+            <button class="choice-btn" onclick="selectChoice('console',this,'VR Arena')">🥽 VR Arena</button>
+          </div>
+          <div class="mt-8 flex justify-between">
+            <button onclick="prevStep(2)" class="btn-outline">← Back</button>
+            <button onclick="nextStep(2)" class="btn-primary">Next: Game →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Game -->
+        <div class="step" id="step-3">
+          <h3 class="font-bold text-xl mb-1">Pick Your Game</h3>
+          <p class="text-star/50 text-sm mb-7">We'll have it pre-loaded and ready.</p>
+          <div class="grid grid-cols-2 gap-3" id="game-grid">
+            <!-- populated by JS based on console -->
+          </div>
+          <div class="mt-8 flex justify-between">
+            <button onclick="prevStep(3)" class="btn-outline">← Back</button>
+            <button onclick="nextStep(3)" class="btn-primary">Next: Details →</button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Personal Info -->
+        <div class="step" id="step-4">
+          <h3 class="font-bold text-xl mb-1">Your Details</h3>
+          <p class="text-star/50 text-sm mb-7">Almost there — just your name and number.</p>
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="text-xs text-star/60 font-medium mb-2 block">Full Name</label>
+              <input type="text" id="bk-name" placeholder="Your gaming alias" class="form-input" />
+            </div>
+            <div>
+              <label class="text-xs text-star/60 font-medium mb-2 block">Phone Number</label>
+              <input type="tel" id="bk-phone" placeholder="+91 XXXXX XXXXX" class="form-input" />
+            </div>
+          </div>
+
+          <!-- Booking summary -->
+          <div class="mt-6 p-4 rounded-xl" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);">
+            <p class="text-xs text-nova font-semibold mb-3 uppercase tracking-widest">Booking Summary</p>
+            <div class="flex flex-col gap-2 text-sm text-star/70">
+              <div class="flex justify-between"><span>Date</span><span id="sum-date" class="text-star font-medium">—</span></div>
+              <div class="flex justify-between"><span>Duration</span><span id="sum-dur" class="text-star font-medium">—</span></div>
+              <div class="flex justify-between"><span>Time</span><span id="sum-time" class="text-star font-medium">—</span></div>
+              <div class="flex justify-between"><span>Console</span><span id="sum-console" class="text-star font-medium">—</span></div>
+              <div class="flex justify-between"><span>Game</span><span id="sum-game" class="text-star font-medium">—</span></div>
+              <hr class="border-white/10 my-1"/>
+              <div class="flex justify-between text-base font-bold"><span>Estimated Total</span><span id="sum-total" class="grad-text">₹—</span></div>
+            </div>
+          </div>
+
+          <div class="mt-8 flex justify-between">
+            <button onclick="prevStep(4)" class="btn-outline">← Back</button>
+            <button onclick="confirmBooking()" class="btn-primary">Confirm Booking 🚀</button>
+          </div>
+        </div>
+
+        <!-- STEP 5: Success -->
+        <div class="step text-center py-6" id="step-5">
+          <div class="text-6xl mb-5">🚀</div>
+          <h3 class="font-black text-2xl grad-text mb-3">You're Booked!</h3>
+          <p class="text-star/60 text-sm mb-2">Your slot has been reserved at <strong class="text-star">Astro Galaxy Gaming Center</strong>.</p>
+          <p class="text-star/60 text-sm mb-8">WhatsApp-ல் உங்க booking details அனுப்பப்பட்டது ✅</p>
+          <div id="confirm-details" class="text-sm text-star/70 mb-6 text-left p-5 rounded-xl" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);"></div>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <button id="wa-resend-btn" onclick="resendWhatsApp()" class="btn-primary gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Open WhatsApp
+            </button>
+            <button onclick="resetBooking()" class="btn-outline">Book Another Slot</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="relative z-10 py-14 px-5">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid sm:grid-cols-3 gap-10 mb-10">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-2xl">🌌</span>
+            <span class="font-black text-lg"><span class="grad-text">Astro</span> Galaxy</span>
+          </div>
+          <p class="text-star/45 text-sm leading-relaxed max-w-xs">Tiruchirappalli's most immersive gaming experience. Premium pods, top-tier hardware, and zero latency.</p>
+        </div>
+        <div>
+          <p class="font-semibold text-sm mb-4 text-star/80">Quick Links</p>
+          <div class="flex flex-col gap-2.5 text-star/50 text-sm">
+            <a href="#home" class="hover:text-nova transition-colors">Home</a>
+            <a href="#games" class="hover:text-nova transition-colors">Games Library</a>
+            <a href="#consoles" class="hover:text-nova transition-colors">Consoles & Platforms</a>
+            <a href="#booking" class="hover:text-nova transition-colors">Book a Slot</a>
+          </div>
+        </div>
+        <div>
+          <p class="font-semibold text-sm mb-4 text-star/80">Visit Us</p>
+          <div class="flex flex-col gap-2 text-star/50 text-sm">
+            <p>📍 123 Cosmic Street, Tiruchirappalli, TN</p>
+            <p>📞 +91 98765 43210</p>
+            <p>📧 hello@astrogalaxy.in</p>
+            <p class="mt-1">⏰ Mon–Sun: 10 AM – 11 PM</p>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white/08 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-star/35 text-xs">
+        <p>© 2025 Astro Galaxy Gaming Center. All rights reserved.</p>
+        <p>Crafted with ✦ for gamers in Trichy</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <style>
+    @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  </style>
+
+  <script>
+  // ── STARFIELD CANVAS ──────────────────────────────────────
+  (function() {
+    const canvas = document.getElementById('star-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, stars = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = [];
+      const count = Math.floor((W * H) / 5000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.2 + 0.2,
+          a: Math.random(),
+          da: (Math.random() - 0.5) * 0.004,
+          speed: Math.random() * 0.06 + 0.01,
+        });
+      }
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      stars.forEach(s => {
+        s.a += s.da;
+        if (s.a <= 0 || s.a >= 1) s.da *= -1;
+        s.y += s.speed;
+        if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220,220,255,${s.a * 0.8})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(tick);
+    }
+
+    resize();
+    initStars();
+    tick();
+    window.addEventListener('resize', () => { resize(); initStars(); });
+  })();
+
+  // ── SCROLL REVEAL ─────────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ── NAV SCROLL EFFECT ─────────────────────────────────────
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.background = window.scrollY > 40 ? 'rgba(4,6,15,0.88)' : '';
+  });
+
+  // ── MOBILE MENU ───────────────────────────────────────────
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+
+  // ── SCROLL TO BOOKING ─────────────────────────────────────
+  function scrollToBooking(console = null) {
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+    if (console) {
+      setTimeout(() => {
+        // pre-select console in step 2
+        bk.console = console;
+        const btns = document.querySelectorAll('#console-grid .choice-btn');
+        btns.forEach(b => { b.classList.toggle('selected', b.textContent.includes(console)); });
+      }, 600);
+    }
+  }
+
+  // ── BOOKING WIZARD ────────────────────────────────────────
+  const bk = { date: '', duration: '', time: '', console: '', game: '', name: '', phone: '' };
+
+  const ALL_SLOTS   = ['10:00 AM','11:00 AM','12:00 PM','01:00 PM','02:00 PM','03:00 PM','04:00 PM','05:00 PM','06:00 PM','07:00 PM','08:00 PM','09:00 PM'];
+  const CONSOLES    = ['PS5','Xbox Series X','Gaming PC','VR Arena'];
+
+  // ── BOOKED SLOTS STORE ────────────────────────────────────
+  // Structure: bookedSlots[date][console] = Set of booked start-slot indices
+  // Each booking blocks slots from startIndex to startIndex+duration-1
+  const bookedSlots = {};   // persists for the page session
+
+  function slotKey(date, consoleName) { return `${date}||${consoleName}`; }
+
+  function getBookedIndices(date, consoleName) {
+    return bookedSlots[slotKey(date, consoleName)] || new Set();
+  }
+
+  function markSlotBooked(date, consoleName, timeSlot, duration) {
+    const key = slotKey(date, consoleName);
+    if (!bookedSlots[key]) bookedSlots[key] = new Set();
+    const startIdx = ALL_SLOTS.indexOf(timeSlot);
+    for (let i = 0; i < parseInt(duration); i++) {
+      if (startIdx + i < ALL_SLOTS.length) bookedSlots[key].add(startIdx + i);
+    }
+  }
+
+  function isSlotAvailable(date, consoleName, slotIdx, duration) {
+    const booked = getBookedIndices(date, consoleName);
+    for (let i = 0; i < parseInt(duration || 1); i++) {
+      if (booked.has(slotIdx + i)) return false;
+    }
+    return true;
+  }
+
+  // ── RENDER TIME GRID ─────────────────────────────────────
+  function renderTimeGrid() {
+    const grid   = document.getElementById('time-grid');
+    const date   = document.getElementById('bk-date').value;
+    const dur    = parseInt(document.getElementById('bk-duration').value) || 1;
+    const con    = bk.console || CONSOLES[0]; // use selected console if in step 1 re-render
+
+    grid.innerHTML = '';
+    bk.time = ''; // reset selection
+
+    ALL_SLOTS.forEach((t, idx) => {
+      const b = document.createElement('button');
+      b.className = 'slot-btn';
+
+      // Check availability: slot + its duration window must all be free
+      const available = !date || isSlotAvailable(date, con, idx, dur);
+
+      // Also ensure slot + duration doesn't overflow end of day
+      const overflows = idx + dur > ALL_SLOTS.length;
+
+      if (!available || overflows) {
+        b.classList.add('booked');
+        b.disabled = true;
+        b.innerHTML = `<span>${t}</span><span class="slot-tag">Booked</span>`;
+      } else {
+        b.innerHTML = `<span>${t}</span><span class="slot-tag">Open</span>`;
+        b.onclick = () => {
+          grid.querySelectorAll('.slot-btn').forEach(x => x.classList.remove('selected'));
+          b.classList.add('selected');
+          bk.time = t;
+        };
+      }
+      grid.appendChild(b);
+    });
+  }
+
+  // Re-render slots whenever date or duration changes
+  document.getElementById('bk-date').addEventListener('change', () => { bk.time=''; renderTimeGrid(); });
+  document.getElementById('bk-duration').addEventListener('change', () => { bk.time=''; renderTimeGrid(); });
+
+  const gamesByConsole = {
+    'PS5':          ['Red Dead Redemption 2','GTA V','Spider-Man 2','Mortal Kombat 1','EA FC 25','God of War Ragnarök','Horizon Forbidden West'],
+    'Xbox Series X':['GTA V','Forza Horizon 5','Mortal Kombat 1','EA FC 25','Call of Duty MW3','Halo Infinite'],
+    'Gaming PC':    ['Valorant','GTA V','Cyberpunk 2077','Red Dead Redemption 2','Call of Duty MW3','Counter-Strike 2','Fortnite'],
+    'VR Arena':     ['Horizon: COTM VR','Beat Saber','Superhot VR','Half-Life Alyx','Pistol Whip','The Walking Dead S&S'],
+  };
+
+  const rates = { 'PS5': 80, 'Xbox Series X': 80, 'Gaming PC': 100, 'VR Arena': 120 };
+
+  // Initial render of time grid (empty date — shows all open)
+  document.getElementById('bk-date').min = new Date().toISOString().split('T')[0];
+  renderTimeGrid();
+
+  function selectChoice(field, btn, val) {
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    bk[field] = val;
+    if (field === 'console') { populateGames(val); renderTimeGrid(); }
+  }
+
+  function populateGames(consoleName) {
+    const grid = document.getElementById('game-grid');
+    grid.innerHTML = '';
+    bk.game = '';
+    (gamesByConsole[consoleName] || []).forEach(g => {
+      const b = document.createElement('button');
+      b.className = 'choice-btn';
+      b.textContent = g;
+      b.onclick = () => selectChoice('game', b, g);
+      grid.appendChild(b);
+    });
+  }
+
+  function nextStep(current) {
+    if (!validateStep(current)) return;
+    goStep(current + 1);
+    if (current + 1 === 4) updateSummary();
+  }
+
+  function prevStep(current) { goStep(current - 1); }
+
+  function goStep(n) {
+    document.querySelectorAll('.step').forEach((s,i) => s.classList.toggle('active', i + 1 === n));
+    [1,2,3,4].forEach(i => {
+      const el = document.getElementById('si-' + i);
+      el.classList.remove('active','done');
+      if (i < n) el.classList.add('done');
+      else if (i === n) el.classList.add('active');
+    });
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function validateStep(n) {
+    if (n === 1) {
+      bk.date     = document.getElementById('bk-date').value;
+      bk.duration = document.getElementById('bk-duration').value;
+      if (!bk.date)     { showToast('Please select a date 📅'); return false; }
+      if (!bk.duration) { showToast('Please select a duration ⏱️'); return false; }
+      if (!bk.time)     { showToast('Please select an available time slot 🕑'); return false; }
+    }
+    if (n === 2 && !bk.console) { showToast('Please select a console 🎮'); return false; }
+    if (n === 3 && !bk.game)    { showToast('Please pick a game 🎯'); return false; }
+    return true;
+  }
+
+  function updateSummary() {
+    const fmt = new Date(bk.date).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+    const total = (rates[bk.console] || 0) * parseInt(bk.duration);
+    document.getElementById('sum-date').textContent    = fmt || '—';
+    document.getElementById('sum-dur').textContent     = bk.duration + ' hr' + (bk.duration > 1 ? 's' : '');
+    document.getElementById('sum-time').textContent    = bk.time;
+    document.getElementById('sum-console').textContent = bk.console;
+    document.getElementById('sum-game').textContent    = bk.game;
+    document.getElementById('sum-total').textContent   = '₹' + total;
+  }
+
+  function confirmBooking() {
+    bk.name  = document.getElementById('bk-name').value.trim();
+    bk.phone = document.getElementById('bk-phone').value.trim();
+    if (!bk.name)                       { showToast('Please enter your name 👤'); return; }
+    if (!bk.phone || bk.phone.length < 10) { showToast('Enter a valid phone number 📱'); return; }
+
+    const total = (rates[bk.console] || 0) * parseInt(bk.duration);
+    const fmt   = new Date(bk.date).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+
+    // ── Save this slot as booked ──────────────────────────
+    markSlotBooked(bk.date, bk.console, bk.time, bk.duration);
+
+    // ── Build WhatsApp message ────────────────────────────
+    const msg =
+`🎮 *New Booking — Astro Galaxy Gaming Center*
+
+👤 *Name:* ${bk.name}
+📱 *Phone:* ${bk.phone}
+📅 *Date:* ${fmt}
+🕑 *Time:* ${bk.time} (${bk.duration} hr${parseInt(bk.duration) > 1 ? 's' : ''})
+🖥️ *Console:* ${bk.console}
+🎯 *Game:* ${bk.game}
+💰 *Total:* ₹${total}
+
+Please confirm my slot. Thank you! 🙏`;
+
+    const waURL = `https://wa.me/919585426769?text=${encodeURIComponent(msg)}`;
+    lastWaURL = waURL;
+    window.open(waURL, '_blank');
+
+    document.getElementById('confirm-details').innerHTML = `
+      <div class="flex flex-col gap-2.5">
+        <div class="flex justify-between"><span>Name</span><span class="text-star font-semibold">${bk.name}</span></div>
+        <div class="flex justify-between"><span>Phone</span><span class="text-star font-semibold">${bk.phone}</span></div>
+        <div class="flex justify-between"><span>Date</span><span class="text-star font-semibold">${fmt}</span></div>
+        <div class="flex justify-between"><span>Time</span><span class="text-star font-semibold">${bk.time} · ${bk.duration}hr</span></div>
+        <div class="flex justify-between"><span>Console</span><span class="text-star font-semibold">${bk.console}</span></div>
+        <div class="flex justify-between"><span>Game</span><span class="text-star font-semibold">${bk.game}</span></div>
+        <hr style="border-color:rgba(255,255,255,.08)"/>
+        <div class="flex justify-between font-bold text-base"><span>Total</span><span style="background:linear-gradient(135deg,#f0abfc,#a855f7,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent">₹${total}</span></div>
+      </div>
+    `;
+    goStep(5);
+    showToast('Booking confirmed! WhatsApp-ல் message அனுப்பப்பட்டது 🚀');
+  }
+
+  function resetBooking() {
+    Object.keys(bk).forEach(k => bk[k] = '');
+    document.getElementById('bk-date').value     = '';
+    document.getElementById('bk-duration').value = '';
+    document.getElementById('bk-name').value     = '';
+    document.getElementById('bk-phone').value    = '';
+    document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('game-grid').innerHTML = '';
+    renderTimeGrid();
+    goStep(1);
+  }
+
+  let lastWaURL = '';
+  function resendWhatsApp() { if (lastWaURL) window.open(lastWaURL, '_blank'); }
+
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+  }
+  </script>
+</body>
+</html>
